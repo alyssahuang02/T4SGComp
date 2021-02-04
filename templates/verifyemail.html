@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Verify Email
+{% endblock %}
+
+{% block main %}
+    <form action="/verifyemail" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="code" placeholder="Verification Code" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit" name = "submit" value="submit">Submit</button>
+        <button class="btn btn-primary" type="submit" name = "re-send" value="re-send"> Resend Code </button>
+    </form>
+{% endblock %}

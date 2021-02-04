@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Vaccine
+{% endblock %}
+
+{% block main %}
+
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+{% endif %}
+
+<h4>You are editing information for the {{vaccine}} Vaccine in {{country}}. </h4>
+
+<h6> Here is the current information: </h6>
+<table>
+    <tr>
+      <th> Vaccine Name </th>
+      <th> Amount Distributed </th>
+      <th> Amount Available </th>
+    </tr>
+      <tr>
+        <td> {{vaccine}} </td>
+        <td> {{distributed}} </td>
+        <td> {{remaining}} </td>
+      </tr>
+  </table>
+
+<h6> Please submit edits here: </h6>
+<form action="/editvaccine" method="post">
+    <div class="form-group">
+        <input class="form-control" name="distributed" placeholder="Amount Distributed">
+        <input class="form-control" name="remaining" placeholder="Amount Remaining">
+    </div>
+    <button class="btn btn-primary" type="submit" value="submit">Submit</button>
+</form>
+
+{% endblock %}
