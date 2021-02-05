@@ -112,7 +112,7 @@ def forgotpassword():
         mail.send(message)
 
         # Resets password to account
-        db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(
+        db.execute("UPDATE users SET password = ? WHERE username = ?", generate_password_hash(
             code), request.form.get("username"))
 
         return render_template("resetpassword.html", forgot=1)
@@ -135,7 +135,7 @@ def resetpassword():
             return render_template("apology.html", top = 400, bottom = "invalid username")
 
         # Checks to see if user entered correct old password
-        if not check_password_hash(rows[0]["hash"], request.form.get("old_password")):
+        if not check_password_hash(rows[0]["password"], request.form.get("old_password")):
             return render_template("apology.html", top = 400, bottom = "incorrect password")
 
         # Ensures user fills in a new password
@@ -152,7 +152,7 @@ def resetpassword():
 
         # Updates the finance.db tables
         username = rows[0]['username']
-        db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(
+        db.execute("UPDATE users SET password = ? WHERE username = ?", generate_password_hash(
             request.form.get("new_password")), username)
 
         return redirect("/")
@@ -368,4 +368,4 @@ def editvaccine():
         vax_id = db.execute('SELECT id FROM vaccines WHERE name = ?', session['vaccine'])[0]['id']
         country_id = db.execute('SELECT id FROM countries WHERE name = ?', session['country'])[0]['id']
         info = db.execute('SELECT amount_left, amount_distributed FROM entries WHERE vax_id = ? AND country_id = ?', vax_id, country_id)[0]
-        return render_template('editvaccine.html', vaccine = session['vaccine'], distributed=info['amount_distributed'], remaining = info['amount_left'])
+        return render_template('editvaccine.html', vaccine = session['vaccine'], distributed=info['amount_distributed'], remaining = info['amount_left'], country=session['country'])
